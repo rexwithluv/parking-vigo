@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import Card from './card.svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import type { Parking } from '../interfaces/parking';
+	import ParkingCard from './parking-card.svelte';
 
 	let parkingsVigo: Parking[] | null;
+	let interval: number;
 
 	async function getData(): Promise<Parking[] | null> {
 		try {
@@ -17,14 +18,25 @@
 		}
 	}
 
-	onMount(async () => (parkingsVigo = await getData()));
+	onMount(async () => {
+		parkingsVigo = await getData();
+
+		const intervalSeconds = 60;
+		interval = setInterval(async () => {
+			parkingsVigo = await getData();
+		}, intervalSeconds * 1000);
+	});
+
+	onDestroy(() => clearInterval(interval));
 </script>
 
 <main>
 	<h1>Número de plazas libres en Parkings de Vigo</h1>
 
 	{#each parkingsVigo as parking}
-		<Card {parking}/>
+		<div class="card">
+			<ParkingCard {parking} />
+		</div>
 	{/each}
 
 	<footer>Este sitio web no está relacionado de ninguna forma con el Ayuntamiento de Vigo.</footer>
@@ -33,13 +45,13 @@
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 
-	h1,
-	footer {
-		text-align: center;
-	}
-
 	* {
 		font-family: 'Josefin Sans', sans-serif;
 		font-weight: 400;
+	}
+
+	h1,
+	footer {
+		text-align: center;
 	}
 </style>
