@@ -1,7 +1,9 @@
 name: Generate Docker images
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   docker:

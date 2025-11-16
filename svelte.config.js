@@ -1,6 +1,9 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
+const isDevelopment = process.env.VITE_ENVIRONMENT === 'development';
+const baseUrl = isDevelopment ? '/' : '/parking-vigo';
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	preprocess: vitePreprocess(),
@@ -13,8 +16,9 @@ const config = {
 			strict: true
 		}),
 		alias: {
-			"@/*": "./src/lib/"
-		}
+			'@/*': './src/lib/'
+		},
+		paths: { base: baseUrl }
 	}
 };
 
