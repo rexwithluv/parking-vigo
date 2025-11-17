@@ -1,0 +1,9 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  namespace: parking-vigo
+  name: parking-vigo-strip-prefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /parking-vigo
