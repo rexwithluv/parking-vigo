@@ -30,16 +30,20 @@
 	onDestroy(() => clearInterval(interval));
 </script>
 
-<main>
-	<h1>Número de plazas libres en Parkings de Vigo</h1>
+<main class="flex min-h-screen flex-col">
+	<h1 class="text-heading mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+		Número de plazas libres en Parkings de Vigo
+	</h1>
 
-	{#each parkingsVigo as parking}
-		<div class="card">
+	<div class="grid flex-grow grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-4">
+		{#each parkingsVigo as parking}
 			<ParkingCard {parking} />
-		</div>
-	{/each}
+		{/each}
+	</div>
 
-	<footer>Este sitio web no está relacionado de ninguna forma con el Ayuntamiento de Vigo.</footer>
+	<footer class="bg-gray-100 p-4 text-center text-sm">
+		Este sitio web no está relacionado de ninguna forma con el Ayuntamiento de Vigo.
+	</footer>
 </main>
 
 <style>
