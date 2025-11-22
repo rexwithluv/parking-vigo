@@ -3,59 +3,87 @@
 	import type { Parking } from '../interfaces/parking';
 	import ParkingCard from './parking-card.svelte';
 
-	let parkingsVigo: Parking[] | null;
+	let parkingsVigo: Parking[] = [];
 	let interval: number;
+	let lastApiUpdate: string = '-';
 
-	async function getData(): Promise<Parking[] | null> {
+	let isLoading: boolean = true;
+
+	async function getData(): Promise<Parking[]> {
 		try {
 			const url: string = 'https://datos.vigo.org/data/trafico/parkings-ocupacion.json';
-
 			const request = await fetch(url);
+
 			return await request.json();
 		} catch (error) {
-			console.error('No se han podido recuperar los datos.');
-			return null;
+			console.error('No se han podido recuperar los datos: ', error);
+			return [];
 		}
 	}
 
-	onMount(async () => {
-		parkingsVigo = await getData();
+	async function loadAndSetData(): Promise<void> {
+		isLoading = true;
+		const data = await getData();
 
-		const intervalSeconds = 60;
-		interval = setInterval(async () => {
-			parkingsVigo = await getData();
-		}, intervalSeconds * 1000);
+		parkingsVigo = data.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es-ES'));
+		lastApiUpdate = new Date(parkingsVigo[0].fechahora).toLocaleTimeString('es-ES', {
+			hour: '2-digit',
+			minute: '2-digit'
+		});
+
+		isLoading = false;
+	}
+
+	onMount(async () => {
+		await loadAndSetData();
+
+		const intervalSeconds = 15;
+		interval = setInterval(loadAndSetData, intervalSeconds * 1000);
 	});
 
 	onDestroy(() => clearInterval(interval));
 </script>
 
-<main class="flex min-h-screen flex-col">
-	<h1 class="text-heading mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-		Número de plazas libres en Parkings de Vigo
-	</h1>
+<main class="flex min-h-screen flex-col bg-gray-50">
+	<header class="p-4 text-center md:p-8">
+		<h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+			Plazas Libres en Parkings de Vigo
+		</h1>
+		<p class="mt-2 text-xl font-medium text-gray-600">
+			Última actualización de la API:
+			{#if isLoading && lastApiUpdate === '—'}
+				Cargando...
+			{:else}
+				{lastApiUpdate}
+			{/if}
+		</p>
+		<p class="text-sm text-gray-500">
+			Hecho con <span class="text-red-600">&lt;3</span> por
+			<a href="https://rexwithluv.dev" class="text-red-600 underline hover:text-red-500"
+				>@rexwithluv</a
+			>
+		</p>
+	</header>
 
-	<div class="grid flex-grow grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-4">
-		{#each parkingsVigo as parking}
-			<ParkingCard {parking} />
-		{/each}
+	<div class="flex-grow p-4 md:p-8">
+		<div class="mx-auto max-w-4xl space-y-3">
+			<div class="space-y-3">
+				{#each parkingsVigo as parking}
+					<ParkingCard {parking} />
+				{/each}
+			</div>
+		</div>
 	</div>
 
-	<footer class="bg-gray-100 p-4 text-center text-sm">
-		Este sitio web no está relacionado de ninguna forma con el Ayuntamiento de Vigo.
+	<footer class="border-t border-gray-200 bg-gray-100 p-4 text-center text-sm text-gray-600">
+		Este sitio web no está relacionado de ninguna forma con el
+		<a
+			href="https://hoxe.vigo.org/"
+			class="text-blue-600 underline transition-colors hover:text-blue-800"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			Ayuntamiento de Vigo
+		</a>.
 	</footer>
 </main>
-
-<style>
-	@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
-
-	* {
-		font-family: 'Josefin Sans', sans-serif;
-		font-weight: 400;
-	}
-
-	h1,
-	footer {
-		text-align: center;
-	}
-</style>

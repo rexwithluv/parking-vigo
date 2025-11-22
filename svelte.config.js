@@ -18,7 +18,7 @@ const config = {
 		alias: {
 			'@/*': './src/lib/'
 		},
-		paths: { base: baseUrl }
+		paths: { base: baseUrl, relative: false }
 	}
 };
 

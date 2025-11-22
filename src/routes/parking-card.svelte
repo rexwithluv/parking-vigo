@@ -1,30 +1,38 @@
 <script lang="ts">
 	import type { Parking } from '../interfaces/parking';
-	import { Card } from 'flowbite-svelte';
+
 	export let parking: Parking;
 
-	$: nombre = parking['nombre'];
-	$: plazasLibres = parking['plazaslibres'];
-	$: ocupacion = parking['ocupacion'];
+	$: ({ nombre, plazaslibres: plazasLibres, ocupacion } = parking);
 
-	$: backgroundColor =
-		ocupacion > 75 ? 'bg-red-400' : ocupacion > 50 ? 'bg-yellow-300' : 'bg-green-400';
+	$: textClass =
+		ocupacion > 75 ? 'text-red-600' : ocupacion > 50 ? 'text-yellow-600' : 'text-green-600';
+
+	$: indicatorClass =
+		ocupacion > 75 ? 'bg-red-500' : ocupacion > 50 ? 'bg-yellow-500' : 'bg-green-500';
 </script>
 
-<main>
-	<Card class="card p-4 sm:p-6 md:p-8 {backgroundColor}">
-		<h5 class="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-			{nombre}
-		</h5>
-		<p class="text-center leading-tight font-normal text-gray-700 dark:text-gray-400">
-			Plazas libres: {plazasLibres} <br />
-			Ocupación de un {ocupacion}% aprox.
-		</p>
-	</Card>
-</main>
+<a
+	href={`https://www.google.com/maps/search/?api=1&query=${parking.lat},${parking.lon}`}
+	target="_blank"
+	rel="noopener noreferrer"
+	class="relative flex cursor-pointer items-center overflow-hidden rounded-lg border-l-8 border-transparent bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
+>
+	<div class="absolute inset-y-0 left-0 w-2 {indicatorClass}"></div>
 
-<style>
-	* {
-		font-weight: 400;
-	}
-</style>
+	<div class="ml-2 flex-grow">
+		<p class="text-lg leading-tight font-semibold text-gray-900">
+			{nombre}
+		</p>
+		<p class="mt-1 text-sm text-gray-500">
+			Ocupación: {ocupacion}% aprox.
+		</p>
+	</div>
+
+	<div class="flex-shrink-0 text-right">
+		<p class="text-3xl font-extrabold {textClass} leading-none">
+			{plazasLibres}
+		</p>
+		<p class="mt-1 text-xs text-gray-500">Libres</p>
+	</div>
+</a>
