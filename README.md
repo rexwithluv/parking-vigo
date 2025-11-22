@@ -1,38 +1,22 @@
-# sv
+# Parking-Vigo | Plazas Libres en Tiempo Real
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+![Svelte](https://img.shields.io/badge/sveltekit-%23f1413d.svg?style=for-the-badge&logo=svelte&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![JSON](https://img.shields.io/badge/JSON-%23000000.svg?style=for-the-badge&logo=json)
 
-## Creating a project
+Una aplicación web para consultar la ocupación y el número de plazas libres en varios parkings principales de la ciudad de Vigo, Galicia. Esta aplicación toma los datos públicos del sitio web oficial del [Ayuntamiento de Vigo](https://datos-ckan.vigo.org/dataset/t-parking-real/resource/2b58ebc4-5a74-4ddc-bbfb-2376530390c3) y los muestra de forma más amigable.
 
-If you're seeing this, you've probably already done this step. Congrats!
+El proyecto está desplegado y es accesible en la siguiente URL -> **[rexwithluv.dev/parking-vigo]([https://rexwithluv.dev/parking-vigo)**
 
-```sh
-# create a new project in the current directory
-npx sv create
+## Uso y Desarrollo
 
-# create a new project in my-app
-npx sv create my-app
-```
+### Levantar en local (Modo Desarrollo)
 
-## Developing
+Ejecuta el servidor de desarrollo con HMR:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
+```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+La aplicación estará disponible en `http://localhost:5173/parking-vigo`.

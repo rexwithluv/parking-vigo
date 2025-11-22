@@ -4,7 +4,7 @@
 	import ParkingCard from './parking-card.svelte';
 
 	let parkingsVigo: Parking[] = [];
-	let interval: number;
+	let interval: NodeJS.Timeout;
 	let lastApiUpdate: string = '-';
 
 	let isLoading: boolean = true;
