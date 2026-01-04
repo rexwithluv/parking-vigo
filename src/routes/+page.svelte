@@ -33,6 +33,33 @@
 			parkingsData.push(...data);
 		}
 
+		// Super original el nombre de la variable, son las 3:30am
+		const removeThisNames: string[] = [
+			'A Laxe (Centro Comercial)',
+			'Aparcamiento Calvario',
+			'Areal',
+			'Praza Independencia',
+			'Parking Náutico Cíes',
+			'Pintor Colmeiro',
+			'Policarpo Sanz',
+			'Praza de Portugal',
+			'Aparcamiento Praza de América',
+			'Praza da Estrella',
+			'Urzáiz',
+			'Parking Vialia Estación de Vigo (exterior)',
+			'Parking Vialia Estación de Vigo (interior)'
+		];
+		parkingsData = parkingsData.filter(
+			(p) => !removeThisNames.includes(p.nombre) || p.ocupacion !== undefined
+		);
+
+		parkingsData = parkingsData.map((p) => {
+			if (!p.nombre.toLowerCase().startsWith('parking')) {
+				p.nombre = `Parking ${p.nombre}`;
+			}
+			return p;
+		});
+
 		return parkingsData;
 	}
 

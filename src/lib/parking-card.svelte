@@ -37,7 +37,7 @@
 			{nombre}
 		</p>
 
-		{#if ocupacion}
+		{#if ocupacion !== undefined}
 			<p class="mt-1 text-sm text-gray-500">
 				Ocupación: {ocupacion}% aprox.
 			</p>
@@ -45,7 +45,7 @@
 	</div>
 
 	<div class="flex-shrink-0 text-right">
-		{#if plazasLibres}
+		{#if plazasLibres !== undefined}
 			<p class="text-3xl font-extrabold {textClass} leading-none">
 				{plazasLibres}
 			</p>
