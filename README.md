@@ -20,3 +20,7 @@ npm run dev
 ```
 
 La aplicación estará disponible en `http://localhost:5173/parking-vigo`.
+
+## Roadmap
+
+- Mostrar un mapa al usuario (si fuera posible, en tiempo real) que permita ver los parkings directamente y su ocupación usando el sistema de colores.

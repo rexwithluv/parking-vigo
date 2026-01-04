@@ -10,6 +10,7 @@
 	let isLoading: boolean = true;
 
 	let seeParkingsWithoutData: boolean = false;
+	let seeDetails: boolean = false;
 
 	async function fetchData(url: string): Promise<Parking[]> {
 		try {
@@ -53,13 +54,6 @@
 			(p) => !removeThisNames.includes(p.nombre) || p.ocupacion !== undefined
 		);
 
-		parkingsData = parkingsData.map((p) => {
-			if (!p.nombre.toLowerCase().startsWith('parking')) {
-				p.nombre = `Parking ${p.nombre}`;
-			}
-			return p;
-		});
-
 		return parkingsData;
 	}
 
@@ -75,9 +69,9 @@
 
 		const firstValidDate = parkingsVigo.find(
 			(p) => p.fechahora && !isNaN(new Date(p.fechahora).getTime())
-		);
+		)?.fechahora;
 		if (firstValidDate) {
-			lastApiUpdate = new Date(firstValidDate.fechahora).toLocaleTimeString('es-ES', {
+			lastApiUpdate = new Date(firstValidDate).toLocaleTimeString('es-ES', {
 				hour: '2-digit',
 				minute: '2-digit'
 			});
@@ -119,17 +113,24 @@
 		</p>
 	</header>
 
-	<div class="mx-auto mb-6 flex max-w-4xl items-center justify-center px-4">
-		<label class="relative inline-flex cursor-pointer items-center">
+	<div class="mx-auto mb-8 flex max-w-4xl items-center justify-center gap-6 px-4">
+		<label class="group relative inline-flex cursor-pointer items-center">
 			<input
 				type="checkbox"
 				bind:checked={seeParkingsWithoutData}
 				on:change={loadAndSetData}
-				class="h-5 w-5 rounded border-gray-300"
+				class="h-5 w-5 rounded"
 			/>
 
-			<span class="ml-3 text-sm font-medium text-gray-700">
+			<span class="ml-2 text-sm font-medium text-gray-700">
 				Ver parkings sin datos en tiempo real
+			</span>
+		</label>
+
+		<label class="group relative inline-flex cursor-pointer items-center">
+			<input type="checkbox" bind:checked={seeDetails} class="h-5 w-5 rounded" />
+			<span class="ml-2 text-sm font-medium text-gray-700">
+				Ver detalles de cada parking
 			</span>
 		</label>
 	</div>
@@ -138,7 +139,7 @@
 		<div class="mx-auto max-w-4xl space-y-3">
 			<div class="space-y-3">
 				{#each parkingsVigo as parking}
-					<ParkingCard {parking} />
+					<ParkingCard {parking} {seeDetails} />
 				{/each}
 			</div>
 		</div>

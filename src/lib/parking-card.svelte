@@ -2,6 +2,7 @@
 	import type { Parking } from '../interfaces/parking';
 
 	export let parking: Parking;
+	export let seeDetails: boolean;
 
 	$: ({ nombre, plazaslibres: plazasLibres, ocupacion } = parking);
 
@@ -41,6 +42,20 @@
 			<p class="mt-1 text-sm text-gray-500">
 				Ocupación: {ocupacion}% aprox.
 			</p>
+		{/if}
+
+		{#if seeDetails}
+			<div class="text-sm">
+				<p class="text-gray-600">Datos adicionales:</p>
+
+				<ul class="list-disc">
+					{#each Object.entries(parking) as [key, value]}
+						<li class="ml-4 text-gray-600">
+							{key}: {value ? value : 'No disponible'}
+						</li>
+					{/each}
+				</ul>
+			</div>
 		{/if}
 	</div>
 
