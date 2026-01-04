@@ -39,10 +39,16 @@
 		const data = await getData();
 
 		parkingsVigo = data.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es-ES'));
-		lastApiUpdate = new Date(parkingsVigo[0].fechahora).toLocaleTimeString('es-ES', {
-			hour: '2-digit',
-			minute: '2-digit'
-		});
+
+		let counter: number = 0;
+		do {
+			lastApiUpdate = new Date(parkingsVigo[counter].fechahora).toLocaleTimeString('es-ES', {
+				hour: '2-digit',
+				minute: '2-digit'
+			});
+			console.log(lastApiUpdate)
+			counter++;
+		} while (lastApiUpdate.includes("Invalid Date"));
 
 		isLoading = false;
 	}
