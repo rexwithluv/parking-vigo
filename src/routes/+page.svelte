@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import type { Parking } from '../interfaces/parking';
-	import ParkingCard from './parking-card.svelte';
+	import ParkingCard from '../lib/parking-card.svelte';
 
 	let parkingsVigo: Parking[] = [];
 	let interval: NodeJS.Timeout;
@@ -25,13 +25,13 @@
 			'https://datos.vigo.org/data/trafico/aparcamientos-od.json'
 		];
 
-		let parkingData = [];
+		let parkingsData = [];
 		for (const url of urls) {
 			const data = await fetchData(url);
-			parkingData.push(...data);
+			parkingsData.push(...data);
 		}
 
-		return parkingData;
+		return parkingsData;
 	}
 
 	async function loadAndSetData(): Promise<void> {
@@ -46,9 +46,8 @@
 				hour: '2-digit',
 				minute: '2-digit'
 			});
-			console.log(lastApiUpdate)
 			counter++;
-		} while (lastApiUpdate.includes("Invalid Date"));
+		} while (lastApiUpdate === 'Invalid Date');
 
 		isLoading = false;
 	}

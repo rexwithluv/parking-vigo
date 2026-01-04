@@ -24,15 +24,22 @@
 		<p class="text-lg leading-tight font-semibold text-gray-900">
 			{nombre}
 		</p>
-		<p class="mt-1 text-sm text-gray-500">
-			Ocupación: {ocupacion}% aprox.
-		</p>
+
+		{#if ocupacion}
+			<p class="mt-1 text-sm text-gray-500">
+				Ocupación: {ocupacion}% aprox.
+			</p>
+		{/if}
 	</div>
 
 	<div class="flex-shrink-0 text-right">
-		<p class="text-3xl font-extrabold {textClass} leading-none">
-			{plazasLibres}
-		</p>
-		<p class="mt-1 text-xs text-gray-500">Libres</p>
+		{#if plazasLibres}
+			<p class="text-3xl font-extrabold {textClass} leading-none">
+				{plazasLibres}
+			</p>
+			<p class="mt-1 text-xs text-gray-500">Libres</p>
+		{:else}
+			<p class="mt-1 text-xs text-gray-500">Sin información</p>
+		{/if}
 	</div>
 </a>
