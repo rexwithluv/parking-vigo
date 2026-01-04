@@ -7,16 +7,20 @@
 
 Una aplicación web para consultar la ocupación y el número de plazas libres en varios parkings principales de la ciudad de Vigo, Galicia. Esta aplicación toma los datos públicos del sitio web oficial del [Ayuntamiento de Vigo](https://datos-ckan.vigo.org/dataset/t-parking-real/resource/2b58ebc4-5a74-4ddc-bbfb-2376530390c3) y los muestra de forma más amigable.
 
-El proyecto está desplegado y es accesible en la siguiente URL -> **[rexwithluv.dev/parking-vigo]([https://rexwithluv.dev/parking-vigo)**
+El proyecto está desplegado y es accesible en la siguiente URL -> **[https://rexwithluv.dev/parking-vigo](https://rexwithluv.dev/parking-vigo)**
 
 ## Uso y Desarrollo
 
 ### Levantar en local (Modo Desarrollo)
 
-Ejecuta el servidor de desarrollo con HMR:
+Ejecuta el servidor de desarrollo con Hot Reload / Live Reload:
 
 ```bash
 npm run dev
 ```
 
 La aplicación estará disponible en `http://localhost:5173/parking-vigo`.
+
+## Roadmap
+
+- Mostrar un mapa al usuario (si fuera posible, en tiempo real) que permita ver los parkings directamente y su ocupación usando el sistema de colores.
