@@ -9,16 +9,29 @@
 
 	let isLoading: boolean = true;
 
-	async function getData(): Promise<Parking[]> {
+	async function fetchData(url: string): Promise<Parking[]> {
 		try {
-			const url: string = 'https://datos.vigo.org/data/trafico/parkings-ocupacion.json';
 			const request = await fetch(url);
-
 			return await request.json();
 		} catch (error) {
 			console.error('No se han podido recuperar los datos: ', error);
 			return [];
 		}
+	}
+
+	async function getData(): Promise<Parking[]> {
+		const urls: string[] = [
+			'https://datos.vigo.org/data/trafico/parkings-ocupacion.json',
+			'https://datos.vigo.org/data/trafico/aparcamientos-od.json'
+		];
+
+		let parkingData = [];
+		for (const url of urls) {
+			const data = await fetchData(url);
+			parkingData.push(...data);
+		}
+
+		return parkingData;
 	}
 
 	async function loadAndSetData(): Promise<void> {
@@ -59,9 +72,9 @@
 		</p>
 		<p class="text-sm text-gray-500">
 			Hecho con <span class="text-red-600">&lt;3</span> por
-			<a href="https://rexwithluv.dev" class="text-red-600 underline hover:text-red-500"
-				>@rexwithluv</a
-			>
+			<a href="https://rexwithluv.dev" class="text-red-600 underline hover:text-red-500">
+				@rexwithluv
+			</a>
 		</p>
 	</header>
 
