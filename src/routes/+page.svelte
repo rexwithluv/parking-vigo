@@ -3,11 +3,13 @@
 	import type { Parking } from '../interfaces/parking';
 	import ParkingCard from '../lib/parking-card.svelte';
 
-	let parkingsVigo: Parking[] = [];
+	let parkingsVigo: Parking[];
 	let interval: NodeJS.Timeout;
-	let lastApiUpdate: string = '-';
+	let lastApiUpdate: string;
 
 	let isLoading: boolean = true;
+
+	let seeParkingsWithoutData: boolean = false;
 
 	async function fetchData(url: string): Promise<Parking[]> {
 		try {
@@ -40,14 +42,21 @@
 
 		parkingsVigo = data.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es-ES'));
 
-		let counter: number = 0;
-		do {
-			lastApiUpdate = new Date(parkingsVigo[counter].fechahora).toLocaleTimeString('es-ES', {
+		if (!seeParkingsWithoutData) {
+			parkingsVigo = parkingsVigo.filter((p) => p.ocupacion !== undefined);
+		}
+
+		const firstValidDate = parkingsVigo.find(
+			(p) => p.fechahora && !isNaN(new Date(p.fechahora).getTime())
+		);
+		if (firstValidDate) {
+			lastApiUpdate = new Date(firstValidDate.fechahora).toLocaleTimeString('es-ES', {
 				hour: '2-digit',
 				minute: '2-digit'
 			});
-			counter++;
-		} while (lastApiUpdate === 'Invalid Date');
+		} else {
+			lastApiUpdate = 'No disponible';
+		}
 
 		isLoading = false;
 	}
@@ -82,6 +91,21 @@
 			</a>
 		</p>
 	</header>
+
+	<div class="mx-auto mb-6 flex max-w-4xl items-center justify-center px-4">
+		<label class="relative inline-flex cursor-pointer items-center">
+			<input
+				type="checkbox"
+				bind:checked={seeParkingsWithoutData}
+				on:change={loadAndSetData}
+				class="h-5 w-5 rounded border-gray-300"
+			/>
+
+			<span class="ml-3 text-sm font-medium text-gray-700">
+				Ver parkings sin datos en tiempo real
+			</span>
+		</label>
+	</div>
 
 	<div class="flex-grow p-4 md:p-8">
 		<div class="mx-auto max-w-4xl space-y-3">
