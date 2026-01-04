@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import type { Parking } from '../interfaces/parking';
 	import ParkingCard from '../lib/parking-card.svelte';
+	import Footer from '@/footer.svelte';
 
 	let parkingsVigo: Parking[];
 	let interval: NodeJS.Timeout;
@@ -10,11 +11,6 @@
 	let isLoading: boolean = true;
 	let seeParkingsWithoutData: boolean = false;
 	let seeDetails: boolean = false;
-	let seePrivacyModal: boolean = false;
-
-	function togglePrivacyModal(): void {
-		seePrivacyModal = !seePrivacyModal;
-	}
 
 	async function fetchData(url: string): Promise<Parking[]> {
 		try {
@@ -147,75 +143,5 @@
 		</div>
 	</div>
 
-	<footer class="border-t border-gray-200 bg-gray-100 p-4 text-center text-sm text-gray-600">
-		Este sitio web no está relacionado de ninguna forma con el
-		<a
-			href="https://hoxe.vigo.org/"
-			class="text-blue-600 underline transition-colors hover:text-blue-800"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			Ayuntamiento de Vigo
-		</a>. |
-
-		<button
-			on:click={togglePrivacyModal}
-			class="cursor-pointer text-gray-500 underline transition-colors hover:text-gray-800"
-		>
-			Privacidad y Transparencia
-		</button>
-	</footer>
-
-	{#if seePrivacyModal}
-		<div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-			<button class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" on:click={togglePrivacyModal}
-				>.
-			</button>
-
-			<div class="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl">
-				<div class="p-6">
-					<div class="mb-4 flex items-center justify-between">
-						<h2 class="text-2xl font-bold text-gray-900">Privacidad y Datos</h2>
-					</div>
-
-					<div class="space-y-4 text-sm leading-relaxed text-gray-600">
-						<p>
-							<strong class="text-gray-800 underline">Cero rastreo:</strong>
-							Esta aplicación no utiliza cookies, no requiere registro y no almacena ningún dato personal
-							de sus usuarios.
-						</p>
-
-						<p>
-							<strong class="text-gray-800 underline">Origen de los datos:</strong>
-							La información mostrada proviene de las APIs públicas de
-							<strong>Datos Abertos del Concello de Vigo</strong>. Esta app solo actúa como un visor
-							amigable para facilitar la consulta.
-						</p>
-
-						<p>
-							<strong class="text-gray-800 underline">Infraestructura:</strong>
-							El proveedor de hosting puede registrar la dirección IP de forma técnica para prevenir ataques
-							o errores, pero nosotros no tenemos acceso ni interés en procesar esa información para identificarte.
-						</p>
-
-						<p class="pt-2 italic">
-							Como desarrollador, mi intención es aportar una herramienta útil a la comunidad de
-							Vigo. Si tienes dudas, puedes contactarme en mi web personal: <a
-								href="https://rexwithluv.dev">rexwithluv.dev</a
-							>
-						</p>
-					</div>
-
-					<div class="mt-6">
-						<button
-							on:click={togglePrivacyModal}
-							class="w-full cursor-pointer rounded-xl bg-gray-900 px-4 py-3 font-bold text-white transition-colors hover:bg-gray-800"
-						>
-							Entendido
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	{/if}
+	<Footer />
 </main>
