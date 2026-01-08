@@ -1,9 +1,9 @@
 <script lang="ts">
-	export let togglePrivacyModal;
+	let { togglePrivacyModal } = $props();
 </script>
 
 <div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-	<button class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" on:click={togglePrivacyModal}
+	<button class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" onclick={togglePrivacyModal}
 		>.
 	</button>
 
@@ -48,7 +48,7 @@
 
 			<div class="mt-6">
 				<button
-					on:click={togglePrivacyModal}
+					onclick={togglePrivacyModal}
 					class="w-full cursor-pointer rounded-xl bg-gray-900 px-4 py-3 font-bold text-white transition-colors hover:bg-gray-800"
 				>
 					Entendido

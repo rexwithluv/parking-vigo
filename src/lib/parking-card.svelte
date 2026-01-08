@@ -1,28 +1,35 @@
 <script lang="ts">
 	import type { Parking } from '../interfaces/parking';
 
-	export let parking: Parking;
-	export let seeDetails: boolean;
+	let {
+		parking,
+		seeDetails
+	}: {
+		parking: Parking;
+		seeDetails: boolean;
+	} = $props();
 
-	$: ({ nombre, plazaslibres: plazasLibres, ocupacion } = parking);
+	let { nombre, plazaslibres, ocupacion } = $derived(parking);
 
-	$: textClass =
+	let textClass = $derived(
 		ocupacion === undefined
 			? 'text-gray-500'
 			: ocupacion > 75
 				? 'text-red-600'
 				: ocupacion > 50
 					? 'text-yellow-600'
-					: 'text-green-600';
+					: 'text-green-600'
+	);
 
-	$: indicatorClass =
+	let indicatorClass = $derived(
 		ocupacion === undefined
 			? 'bg-gray-400'
 			: ocupacion > 75
 				? 'bg-red-500'
 				: ocupacion > 50
 					? 'bg-yellow-500'
-					: 'bg-green-500';
+					: 'bg-green-500'
+	);
 </script>
 
 <a
@@ -60,9 +67,9 @@
 	</div>
 
 	<div class="flex-shrink-0 text-right">
-		{#if plazasLibres !== undefined}
+		{#if plazaslibres !== undefined}
 			<p class="text-3xl font-extrabold {textClass} leading-none">
-				{plazasLibres}
+				{plazaslibres}
 			</p>
 			<p class="mt-1 text-xs text-gray-500">Libres</p>
 		{:else}

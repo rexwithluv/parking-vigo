@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PrivacyModal from '@/privacy-modal.svelte';
 
-	let seePrivacyModal: boolean = false;
+	let seePrivacyModal: boolean = $state(false);
 
 	function togglePrivacyModal(): void {
 		seePrivacyModal = !seePrivacyModal;
@@ -20,7 +20,7 @@
 	</a>. |
 
 	<button
-		on:click={togglePrivacyModal}
+		onclick={togglePrivacyModal}
 		class="cursor-pointer text-gray-500 underline transition-colors hover:text-gray-800"
 	>
 		Privacidad y Transparencia

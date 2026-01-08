@@ -19,7 +19,8 @@ const config = {
 			'@/*': './src/lib/'
 		},
 		paths: { base: baseUrl, relative: false }
-	}
+	},
+	compilerOptions: { runes: true }
 };
 
 export default config;

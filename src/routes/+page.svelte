@@ -4,13 +4,13 @@
 	import ParkingCard from '../lib/parking-card.svelte';
 	import Footer from '@/footer.svelte';
 
-	let parkingsVigo: Parking[];
+	let parkingsVigo: Parking[] = $state([]);
 	let interval: NodeJS.Timeout;
-	let lastApiUpdate: string;
+	let lastApiUpdate: string = $state('');
 
-	let isLoading: boolean = true;
-	let seeParkingsWithoutData: boolean = false;
-	let seeDetails: boolean = false;
+	let isLoading: boolean = $state(true);
+	let seeParkingsWithoutData: boolean = $state(false);
+	let seeDetails: boolean = $state(false);
 
 	async function fetchData(url: string): Promise<Parking[]> {
 		try {
@@ -118,7 +118,7 @@
 			<input
 				type="checkbox"
 				bind:checked={seeParkingsWithoutData}
-				on:change={loadAndSetData}
+				onchange={loadAndSetData}
 				class="h-5 w-5 rounded"
 			/>
 
