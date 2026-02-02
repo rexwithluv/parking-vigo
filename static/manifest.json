@@ -2,21 +2,23 @@
   "short_name": "ParkingVigo",
   "name": "Parking Vigo: Disponibilidad en tiempo real",
   "description": "Consulta las plazas libres en los parkings de Vigo.",
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "theme_color": "#f9fafb",
-  "background_color": "#ffffff",
+  "background_color": "#f9fafb",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ]
 }

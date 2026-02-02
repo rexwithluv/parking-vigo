@@ -6,28 +6,24 @@
 
 	onMount(() => {
 		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('/sw.js');
+			navigator.serviceWorker.register('sw.js');
 		}
 	});
 </script>
 
 <svelte:head>
+	<link rel="manifest" href="manifest.json" />
+
 	<link
 		rel="icon"
-		href="/favicon-black.png"
+		href="favicon-black.png"
 		type="image/png"
 		media="(prefers-color-scheme: light)"
 	/>
-	<link
-		rel="icon"
-		href="/favicon-white.png"
-		type="image/png"
-		media="(prefers-color-scheme: dark)"
-	/>
 
-	<link rel="apple-touch-icon" href="/icon-192.png" />
+	<link rel="icon" href="favicon-white.png" type="image/png" media="(prefers-color-scheme: dark)" />
 
-	<meta name="theme-color" content="#f9fafb" />
+	<link rel="apple-touch-icon" href="apple-touch-icon.png" type="image/png" />
 </svelte:head>
 
 {@render children()}
