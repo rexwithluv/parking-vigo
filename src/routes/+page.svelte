@@ -46,9 +46,7 @@
 			'Praza de Portugal',
 			'Aparcamiento Praza de América',
 			'Praza da Estrella',
-			'Urzáiz',
-			'Parking Vialia Estación de Vigo (exterior)',
-			'Parking Vialia Estación de Vigo (interior)'
+			'Urzáiz'
 		];
 		parkingsData = parkingsData.filter(
 			(p) => !removeThisNames.includes(p.nombre) || p.ocupacion !== undefined
